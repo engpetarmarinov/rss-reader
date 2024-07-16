@@ -39,7 +39,7 @@ func postParse() http.HandlerFunc {
 		rssItems, err := rssreaderparser.Parse(postParseReq.Urls)
 		if err != nil {
 			logger.Warn(err.Error())
-			writeErrorResponse(w, http.StatusInternalServerError, "error parsing body")
+			writeErrorResponse(w, http.StatusInternalServerError, "error parsing urls")
 			return
 		}
 
