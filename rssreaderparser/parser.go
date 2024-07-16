@@ -11,6 +11,8 @@ import (
 	"github.com/mmcdole/gofeed"
 )
 
+var fpParseURLWithContext = gofeed.NewParser().ParseURLWithContext
+
 // RssItem represents an item of a RSS feed
 type RssItem struct {
 	Title       string
@@ -25,15 +27,14 @@ type RssItem struct {
 func Parse(urls []string) ([]RssItem, error) {
 	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(10*time.Second))
 	defer cancel()
-	fp := gofeed.NewParser()
-	fp.UserAgent = "RssReader v0.0.1"
+
 	numURLs := len(urls)
 	resultsChan := make(chan []RssItem, numURLs)
 	errorChan := make(chan error)
 	wg := &sync.WaitGroup{}
 	for _, url := range urls {
 		wg.Add(1)
-		go parse(ctx, fp, wg, resultsChan, errorChan, url)
+		go parse(ctx, wg, resultsChan, errorChan, url)
 	}
 
 	go func() {
@@ -57,14 +58,15 @@ func Parse(urls []string) ([]RssItem, error) {
 	return items, nil
 }
 
-func parse(ctx context.Context, fp *gofeed.Parser, wg *sync.WaitGroup, resultChan chan<- []RssItem, errorChan chan<- error, url string) {
+func parse(ctx context.Context, wg *sync.WaitGroup, resultChan chan<- []RssItem, errorChan chan<- error, url string) {
 	defer wg.Done()
-	feed, err := fp.ParseURLWithContext(url, ctx)
+	feed, err := fpParseURLWithContext(url, ctx)
 	if err != nil {
 		select {
 		case errorChan <- fmt.Errorf("error parsing url %s, err: %w", url, err):
 			return
 		case <-ctx.Done():
+			errorChan <- fmt.Errorf("cancelled parsing url %s, err: %w", url, ctx.Err())
 			return
 		}
 	}
