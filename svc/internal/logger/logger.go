@@ -132,4 +132,3 @@ func Warn(msg string, args ...any) {
 func Error(msg string, args ...any) {
 	errLogger.Load().Error(msg, args...)
 }
-idea

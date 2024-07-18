@@ -1,4 +1,4 @@
-ideapackage middleware
+package middleware
 
 import (
 	"net/http"

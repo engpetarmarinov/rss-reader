@@ -8,4 +8,3 @@ func WithCommonHeaders(next http.HandlerFunc) http.HandlerFunc {
 		next.ServeHTTP(rw, r)
 	}
 }
-idea
