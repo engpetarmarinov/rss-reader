@@ -20,4 +20,5 @@ func main() {
 
 	<-shutdown
 	logger.Info("graceful shutdown...")
+	svc.Shutdown()
 }
