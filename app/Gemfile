@@ -60,3 +60,7 @@ end
 
 # http client
 gem "httparty"
+# pagination
+gem "kaminari"
+# full text search in postgres
+gem "pg_search"
