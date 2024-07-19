@@ -3,7 +3,7 @@ package rsssvc
 import (
 	"encoding/json"
 	"github.com/engpetarmarinov/rss-reader/rss-reader-svc/internal/logger"
-	"github.com/engpetarmarinov/rss-reader/rssreaderparser"
+	"github.com/engpetarmarinov/rss-reader/rss-reader-svc/internal/parser"
 	"io"
 	"net/http"
 )
@@ -36,7 +36,7 @@ func postParse() http.HandlerFunc {
 
 		//TODO: additional request validation
 
-		rssItems, err := rssreaderparser.Parse(postParseReq.Urls)
+		rssItems, err := parser.Parse(postParseReq.Urls)
 		if err != nil {
 			logger.Warn(err.Error())
 			writeErrorResponse(w, http.StatusInternalServerError, "error parsing urls")

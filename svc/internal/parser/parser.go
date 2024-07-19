@@ -1,4 +1,4 @@
-package rssreaderparser
+package parser
 
 import (
 	"context"
