@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import Breadcrumb from "./Breadcrumb";
 
 const Posts = () => {
     const navigate = useNavigate();
@@ -34,6 +35,11 @@ const Posts = () => {
         </div>
     );
 
+    const breadcrumbPaths = [
+        {name: "Home", href: "/"},
+        {name: "Posts"}
+    ];
+
     return (
         <>
             <section className="jumbotron jumbotron-fluid text-center">
@@ -45,10 +51,8 @@ const Posts = () => {
                 </div>
                 <div className="py-5">
                     <main className="container">
+                        <Breadcrumb paths={breadcrumbPaths} />
                         {posts.length > 0 ? allPosts : noPosts}
-                        <Link to="/" className="btn btn-link">
-                            Home
-                        </Link>
                     </main>
                 </div>
             </section>

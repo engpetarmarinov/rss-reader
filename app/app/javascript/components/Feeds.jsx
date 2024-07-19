@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
+import Breadcrumb from "./Breadcrumb";
 
 const Feeds = () => {
     const navigate = useNavigate();
@@ -44,6 +45,11 @@ const Feeds = () => {
         </div>
     );
 
+    const breadcrumbPaths = [
+        {name: "Home", href: "/"},
+        {name: "Feeds"}
+    ];
+
     return (
         <>
             <section className="jumbotron jumbotron-fluid text-center">
@@ -56,6 +62,7 @@ const Feeds = () => {
             </section>
             <div className="py-5">
                 <main className="container">
+                    <Breadcrumb paths={breadcrumbPaths} />
                     <div className="text-end mb-3">
                         <Link to="/feeds/new" className="btn custom-button">
                             Create New Feed
@@ -64,9 +71,6 @@ const Feeds = () => {
                     <div className="row">
                         {feeds.length > 0 ? allFeeds : noFeed}
                     </div>
-                    <Link to="/" className="btn btn-link">
-                        Home
-                    </Link>
                 </main>
             </div>
         </>

@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
+import Breadcrumb from "./Breadcrumb";
 
 const NewFeed = () => {
     const navigate = useNavigate();
@@ -43,6 +44,12 @@ const NewFeed = () => {
             .catch((error) => console.log(error.message));
     };
 
+    const breadcrumbPaths = [
+        {name: "Home", href: "/"},
+        {name: "Feeds", href: "/feeds"},
+        {name: "New"}
+    ];
+
     return (
         <div className="container mt-5">
             <div className="row">
@@ -50,6 +57,7 @@ const NewFeed = () => {
                     <h1 className="font-weight-normal mb-5">
                         Add a new feed to your collection.
                     </h1>
+                    <Breadcrumb paths={breadcrumbPaths}/>
                     <form onSubmit={onSubmit}>
                         <div className="form-group">
                             <label htmlFor="feedName">Name</label>
@@ -89,9 +97,6 @@ const NewFeed = () => {
                         <button type="submit" className="btn custom-button mt-3">
                             Create Feed
                         </button>
-                        <Link to="/feeds" className="btn btn-link mt-3">
-                            Back to Feeds
-                        </Link>
                     </form>
                 </div>
             </div>

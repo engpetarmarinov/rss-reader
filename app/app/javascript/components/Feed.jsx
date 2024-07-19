@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import Breadcrumb from "./Breadcrumb";
 
 const Feed = () => {
     const params = useParams();
@@ -45,6 +46,11 @@ const Feed = () => {
     };
 
     const feedURL = addHtmlEntities(feed.url);
+    const breadcrumbPaths = [
+        {name: "Home", href: "/"},
+        {name: "Feeds", href: "/feeds"},
+        {name: feed.name}
+    ];
 
     return (
         <div className="">
@@ -60,6 +66,7 @@ const Feed = () => {
                 </h1>
             </div>
             <div className="container py-5">
+                <Breadcrumb paths={breadcrumbPaths}/>
                 <div className="row">
                     <div className="col-sm-12 col-lg-7">
                         <h5 className="mb-2">Feed URL</h5>
@@ -79,9 +86,6 @@ const Feed = () => {
                         </button>
                     </div>
                 </div>
-                <Link to="/feeds" className="btn btn-link">
-                    Back to Feeds
-                </Link>
             </div>
         </div>
     );
