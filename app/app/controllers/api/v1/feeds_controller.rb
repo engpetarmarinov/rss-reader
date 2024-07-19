@@ -2,13 +2,14 @@ class Api::V1::FeedsController < ApplicationController
   before_action :set_feed, only: %i[show destroy]
 
   def index
-    feed = Feed.all.order(created_at: :desc)
+    feed = Feed.all.order(created_at: :desc, id: :desc)
     render json: feed
   end
 
   def create
     feed = Feed.create!(feed_params)
     if feed
+      FeedsParserJob.perform_later
       render json: feed
     else
       render json: feed.errors
@@ -21,6 +22,7 @@ class Api::V1::FeedsController < ApplicationController
 
   def destroy
     @feed&.destroy
+    FeedsParserJob.perform_later
     render json: { message: "Feed deleted!" }
   end
 
