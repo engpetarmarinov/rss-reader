@@ -1,17 +1,30 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import {useNavigate} from "react-router-dom";
 import Breadcrumb from "./Breadcrumb";
+
+const useDebounce = (func, delay) => {
+    const timeoutIdRef = useRef(null);
+
+    return (...args) => {
+        if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
+        timeoutIdRef.current = setTimeout(() => {
+            func(...args);
+        }, delay);
+    };
+};
 
 const Posts = () => {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [query, setQuery] = useState("");
+    const [queryValue, setQueryValue] = useState("");
 
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const res = await fetch(`/api/v1/posts?page=${page}`);
+                const res = await fetch(`/api/v1/posts?page=${page}&query=${query}`);
                 if (res.ok) {
                     const data = await res.json();
                     setPosts(data.posts);
@@ -25,7 +38,7 @@ const Posts = () => {
         };
 
         fetchPosts();
-    }, [page, navigate]);
+    }, [page, query, navigate]);
 
     const handlePageChange = (newPage) => {
         if (newPage >= 1 && newPage <= totalPages) {
@@ -33,20 +46,29 @@ const Posts = () => {
         }
     };
 
+    const handleSearchChange = (value) => {
+        setQuery(value);
+        setPage(1); // Reset to first page on new search
+    };
+
+    const debouncedSearch = useDebounce(handleSearchChange, 500);
+    const handleSearchValueChange = (e) => {
+        setQueryValue(e.target.value);
+        debouncedSearch(e.target.value); // Update the state with a delay
+    };
+
     const allPosts = posts.map((post, index) => (
-        <div key={index} className="row">
-            <div className="col">
-                <a href={post.link} target="_blank" rel="noopener noreferrer">
-                    {post.title}
-                </a>
-            </div>
-        </div>
+        <li className="list-group-item">
+            <a href={post.link} target="_blank" rel="noopener noreferrer">
+                {post.title}
+            </a>
+        </li>
     ));
 
     const noPosts = (
-        <div className="row align-items-center justify-content-center">
-            No posts yet.
-        </div>
+        <li className="list-group-item">
+            {query.length > 0 ? "No posts found." : "No posts yet."}
+        </li>
     );
 
     const breadcrumbPaths = [
@@ -64,7 +86,21 @@ const Posts = () => {
                 <div className="py-5">
                     <main className="container">
                         <Breadcrumb paths={breadcrumbPaths}/>
-                        {posts.length > 0 ? allPosts : noPosts}
+                        <div className="row mb-4">
+                            <div className="col">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Search posts..."
+                                    value={queryValue}
+                                    onChange={handleSearchValueChange}
+                                />
+                            </div>
+                        </div>
+                        <ul className="list-group list-group-horizontal-xxl">
+                            {posts.length > 0 ? allPosts : noPosts}
+                        </ul>
+                        <hr className="border-2 border-top" />
                         <nav aria-label="Page navigation">
                             <ul className="pagination justify-content-center">
                                 <li className="page-item">
