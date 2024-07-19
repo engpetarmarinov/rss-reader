@@ -64,3 +64,6 @@ gem "httparty"
 gem "kaminari"
 # full text search in postgres
 gem "pg_search"
+# Slim template engine
+gem "slim"
+gem "slim-rails"

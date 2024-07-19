@@ -58,7 +58,7 @@ const Posts = () => {
     };
 
     const allPosts = posts.map((post, index) => (
-        <li className="list-group-item">
+        <li key={index} className="list-group-item">
             <a href={post.link} target="_blank" rel="noopener noreferrer">
                 {post.title}
             </a>
