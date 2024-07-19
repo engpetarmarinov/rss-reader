@@ -19,3 +19,9 @@ Feed.create(
   url: 'https://feeds.twit.tv/twit.xml',
   image: 'https://twit.tv/TWiT-iOS-1024x1024.png'
 )
+
+Feed.create(
+  name: 'NYT Technology',
+  url: 'https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml',
+  image: 'https://upload.wikimedia.org/wikipedia/commons/4/40/New_York_Times_logo_variation.jpg'
+)

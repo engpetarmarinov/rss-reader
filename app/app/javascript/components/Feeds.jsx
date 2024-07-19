@@ -24,7 +24,7 @@ const Feeds = () => {
             <div className="card mb-4">
                 <img
                     src={feed.image}
-                    className="card-img-top"
+                    className="card-img-top fixed-height-200-image"
                     alt={`${feed.name} image`}
                 />
                 <div className="card-body">

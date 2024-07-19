@@ -97,7 +97,7 @@ const Posts = () => {
                                 />
                             </div>
                         </div>
-                        <ul className="list-group list-group-horizontal-xxl">
+                        <ul className="list-group text-start">
                             {posts.length > 0 ? allPosts : noPosts}
                         </ul>
                         <hr className="border-2 border-top" />

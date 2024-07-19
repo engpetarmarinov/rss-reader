@@ -41,3 +41,9 @@
   width: 100%;
   opacity: 0.4;
 }
+
+.fixed-height-200-image {
+    height: 200px;
+    object-fit: contain;
+    width: 100%;
+}
