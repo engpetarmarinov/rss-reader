@@ -25,7 +25,8 @@ const NewFeed = () => {
             image: image,
         };
 
-        const token = document.querySelector('meta[name="csrf-token"]').content;
+        const metaElement = document.querySelector('meta[name="csrf-token"]');
+        const token = metaElement ? metaElement.content : "";
         fetch(apiURL, {
             method: "POST",
             headers: {

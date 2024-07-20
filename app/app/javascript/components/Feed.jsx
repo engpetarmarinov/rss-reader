@@ -26,8 +26,8 @@ const Feed = () => {
 
     const deleteFeed = () => {
         const url = `/api/v1/feeds/${params.id}`;
-        const token = document.querySelector('meta[name="csrf-token"]').content;
-
+        const metaElement = document.querySelector('meta[name="csrf-token"]');
+        const token = metaElement ? metaElement.content : "";
         fetch(url, {
             method: "DELETE",
             headers: {

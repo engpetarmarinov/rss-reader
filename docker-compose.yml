@@ -3,13 +3,34 @@ version: '3.9'
 services:
   db:
     image: postgres:14-alpine
+    env_file: .env
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_PASSWORD=test
-      - POSTGRES_USER=test
+
+  rsssvc:
+    build:
+      context: ./svc
+      dockerfile: Dockerfile
+    env_file: .env
+    ports:
+      - "8080:8080"
+
+  rssapp:
+    build:
+      context: ./app
+      dockerfile: development.Dockerfile
+    env_file: .env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - rsssvc
+      - db
 
 volumes:
   pg_data:
+
+networks:
+  rss_app_network:
+    driver: bridge

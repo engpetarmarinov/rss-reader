@@ -1,5 +1,11 @@
 shared:
   url: http://localhost:8080
 
+development:
+  url: http://rsssvc:8080
+
 test:
-  url: http://rssreadersvc/
+  url: http://rsssvc:8080
+
+production:
+  url: http://rsssvc:8080
