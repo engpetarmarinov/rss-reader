@@ -7,12 +7,12 @@ class Api::V1::FeedsController < ApplicationController
   end
 
   def create
-    feed = Feed.create!(feed_params)
-    if feed
+    feed = Feed.new(feed_params)
+    if feed.save
       FeedsParserJob.perform_later
-      render json: feed
+      render json: feed, status: :created
     else
-      render json: feed.errors
+      render json: { errors: feed.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -35,5 +35,4 @@ class Api::V1::FeedsController < ApplicationController
   def set_feed
     @feed = Feed.find(params[:id])
   end
-
 end

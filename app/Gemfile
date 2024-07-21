@@ -42,6 +42,16 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # rspec
+  gem "rspec-rails"
+  gem "rails-controller-testing"
+  # for creating test data
+  gem "factory_bot_rails"
+  # for cleaning test database
+  gem "database_cleaner-active_record"
+  # test coverage
+  gem "simplecov"
 end
 
 group :development do
@@ -64,5 +74,3 @@ gem "pg_search"
 # Slim template engine
 gem "slim"
 gem "slim-rails"
-# workaround for broken gemspec in net-pop
-# gem "net-pop", github: "ruby/net-pop"
