@@ -65,4 +65,8 @@ RSpec.configure do |config|
 
   # configure FactoryBot
   config.include FactoryBot::Syntax::Methods
+
+  # Capybara to use headless driver
+  config.include Capybara::DSL
+  Capybara.default_driver = :selenium_chrome_headless
 end
