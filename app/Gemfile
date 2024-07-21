@@ -74,3 +74,5 @@ gem "pg_search"
 # Slim template engine
 gem "slim"
 gem "slim-rails"
+# Generate JWT
+gem "jwt"

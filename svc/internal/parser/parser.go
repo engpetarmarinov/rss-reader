@@ -71,8 +71,6 @@ func parse(ctx context.Context, wg *sync.WaitGroup, resultChan chan<- []RssItem,
 		}
 	}
 
-	fmt.Println("Feed title", feed.Title)
-
 	items := make([]RssItem, 0)
 	for _, item := range feed.Items {
 		resultItem := RssItem{

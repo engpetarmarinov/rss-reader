@@ -3,6 +3,7 @@ module github.com/engpetarmarinov/rss-reader/rss-reader-svc
 go 1.22
 
 require (
+	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/mmcdole/gofeed v1.3.0
 	github.com/stretchr/testify v1.8.1
 )

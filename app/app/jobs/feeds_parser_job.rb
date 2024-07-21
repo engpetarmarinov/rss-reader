@@ -11,12 +11,19 @@ class FeedsParserJob < ApplicationJob
       return
     end
 
+    token = JwtTokenService.generate_token(
+      { user_id: 1, exp: 2.hours.from_now.to_i }
+    )
+
     response = HTTParty.post(
       feeds_parser_url + "/api/v1/parse",
       body: {
         urls: urls
       }.to_json,
-      headers: { "Content-Type" => "application/json" }
+      headers: {
+        "Content-Type" => "application/json",
+        "Authorization" => "Bearer #{token}"
+      }
     )
 
     if response.success?

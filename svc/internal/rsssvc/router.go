@@ -1,6 +1,7 @@
 package rsssvc
 
 import (
+	"github.com/engpetarmarinov/rss-reader/rss-reader-svc/internal/config"
 	mw "github.com/engpetarmarinov/rss-reader/rss-reader-svc/internal/middleware"
 	"net/http"
 )
@@ -15,10 +16,10 @@ func NewRouter() *Router {
 	}
 }
 
-func (r *Router) RegisterRoutes() http.Handler {
+func (r *Router) RegisterRoutes(cfg *config.Config) http.Handler {
 	r.mux.HandleFunc(
 		"POST /api/v1/parse",
-		mw.WithLogging(mw.WithCommonHeaders(mw.WithAuth(postParse()))))
+		mw.WithLogging(mw.WithCommonHeaders(mw.WithAuth(postParse(), cfg))))
 
 	return r.mux
 }

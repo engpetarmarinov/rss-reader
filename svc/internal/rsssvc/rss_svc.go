@@ -22,7 +22,7 @@ func New(cfg *config.Config) *RSSService {
 }
 
 func (r *RSSService) Run() {
-	router := NewRouter().RegisterRoutes()
+	router := NewRouter().RegisterRoutes(r.config)
 	go func(mux http.Handler) {
 		server := http.Server{
 			Addr:    fmt.Sprintf(":%s", r.config.Port),

@@ -24,5 +24,6 @@ module App
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.feeds_parser = config_for(:feeds_parser)
+    config.jwt_secret_key = ENV["JWT_SECRET_KEY"] || "test"
   end
 end

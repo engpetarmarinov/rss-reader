@@ -7,21 +7,24 @@ import (
 
 // Config holds the configuration values
 type Config struct {
-	LogLevel string
-	Port     string
+	LogLevel     string
+	Port         string
+	JWTSecretKey string
 }
 
 // Options holds the configuration options for building a Config.
 type Options struct {
-	logLevel string
-	port     string
+	logLevel     string
+	port         string
+	jwtSecretKey string
 }
 
 // NewConfig creates a new Config struct and applies the provided options.
 func NewConfig(opts *Options) *Config {
 	return &Config{
-		LogLevel: opts.logLevel,
-		Port:     opts.port,
+		LogLevel:     opts.logLevel,
+		Port:         opts.port,
+		JWTSecretKey: opts.jwtSecretKey,
 	}
 }
 
@@ -39,6 +42,12 @@ func (o *Options) WithLogLevel() *Options {
 // WithPort sets the port in the Options.
 func (o *Options) WithPort() *Options {
 	o.port = getEnv("RSS_READER_SVC_PORT")
+	return o
+}
+
+// WithJWTSecret sets the jwtSecretKey in the Options.
+func (o *Options) WithJWTSecret() *Options {
+	o.jwtSecretKey = getEnv("JWT_SECRET_KEY")
 	return o
 }
 

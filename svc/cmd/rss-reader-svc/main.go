@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	opts := config.NewConfigOpt().WithPort().WithLogLevel()
+	opts := config.NewConfigOpt().WithPort().WithLogLevel().WithJWTSecret()
 	cfg := config.NewConfig(opts)
 	logger.Init(logger.NewConfigOpt().WithLevel(cfg.LogLevel))
 	svc := rsssvc.New(cfg)
