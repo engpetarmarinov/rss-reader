@@ -2,7 +2,7 @@ shared:
   url: http://localhost:8080
 
 development:
-  url: http://rsssvc:8080
+  url: <%= ENV["RSS_READER_SVC_URL"] || "http://localhost:8080" %>
 
 test:
   url: http://rsssvc:8080
