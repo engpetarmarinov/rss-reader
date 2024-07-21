@@ -1,23 +1,51 @@
 package config
 
 import (
+	"log"
 	"os"
-
-	"github.com/engpetarmarinov/rss-reader/rss-reader-svc/internal/logger"
 )
 
-func NewConfig() *Config {
-	return &Config{}
-}
-
+// Config holds the configuration values
 type Config struct {
+	LogLevel string
+	Port     string
 }
 
-func (c *Config) Get(key string) string {
-	return os.Getenv(key)
+// Options holds the configuration options for building a Config.
+type Options struct {
+	logLevel string
+	port     string
 }
 
-func (c *Config) GetLogLevel() logger.Level {
-	logLevel := c.Get("LOG_LEVEL")
-	return logger.NewLogLevel(logLevel)
+// NewConfig creates a new Config struct and applies the provided options.
+func NewConfig(opts *Options) *Config {
+	return &Config{
+		LogLevel: opts.logLevel,
+		Port:     opts.port,
+	}
+}
+
+// NewConfigOpt initializes a new Options struct with default values.
+func NewConfigOpt() *Options {
+	return &Options{}
+}
+
+// WithLogLevel sets the log level in the Options.
+func (o *Options) WithLogLevel() *Options {
+	o.logLevel = getEnv("RSS_READER_SVC_LOG_LEVEL")
+	return o
+}
+
+// WithPort sets the port in the Options.
+func (o *Options) WithPort() *Options {
+	o.port = getEnv("RSS_READER_SVC_PORT")
+	return o
+}
+
+func getEnv(key string) string {
+	value, exists := os.LookupEnv(key)
+	if !exists {
+		log.Panicf("Environment variable %s is not set", key)
+	}
+	return value
 }

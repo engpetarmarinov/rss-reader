@@ -3,7 +3,7 @@
 ## Run locally:
 
 ```bash
-LOG_LEVEL=DEBUG RSS_READER_SVC_PORT=8080 go run cmd/rss-reader-svc/main.go 
+RSS_READER_SVC_LOG_LEVEL=DEBUG RSS_READER_SVC_PORT=8080 go run cmd/rss-reader-svc/main.go 
 ```
 
 ## Run tests:

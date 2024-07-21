@@ -25,7 +25,7 @@ func (r *RSSService) Run() {
 	router := NewRouter().RegisterRoutes()
 	go func(mux http.Handler) {
 		server := http.Server{
-			Addr:    fmt.Sprintf(":%s", r.config.Get("RSS_READER_SVC_PORT")),
+			Addr:    fmt.Sprintf(":%s", r.config.Port),
 			Handler: mux,
 		}
 

@@ -24,7 +24,7 @@ const (
 	ERROR
 )
 
-func NewLogLevel(level string) Level {
+func newLogLevel(level string) Level {
 	level = strings.ToUpper(level)
 	switch level {
 	case "DEBUG":
@@ -59,8 +59,8 @@ type ConfigOpt struct {
 	Level Level
 }
 
-func (opt *ConfigOpt) WithLevel(level Level) *ConfigOpt {
-	opt.Level = level
+func (opt *ConfigOpt) WithLevel(level string) *ConfigOpt {
+	opt.Level = newLogLevel(level)
 	return opt
 }
 

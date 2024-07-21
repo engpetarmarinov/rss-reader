@@ -10,8 +10,9 @@ import (
 )
 
 func main() {
-	cfg := config.NewConfig()
-	logger.Init(logger.NewConfigOpt().WithLevel(cfg.GetLogLevel()))
+	opts := config.NewConfigOpt().WithPort().WithLogLevel()
+	cfg := config.NewConfig(opts)
+	logger.Init(logger.NewConfigOpt().WithLevel(cfg.LogLevel))
 	svc := rsssvc.New(cfg)
 	svc.Run()
 
